@@ -1,24 +1,23 @@
-// @flow
 import produce from "immer";
 
-import type { MultilineString } from "../common";
-import type { JSONObject } from "../types";
+import { MultilineString } from "../common";
+import { JSONObject } from "../types";
 
 export type RawCellType = "raw";
-export const RAWCELL = "raw";
+export const RAWCELL: RawCellType = "raw";
 
 // In-memory version
-type RawCell = {|
-  cellType: RawCellType,
-  metadata: JSONObject,
-  source: string
-|};
+interface RawCell {
+  cellType: RawCellType;
+  metadata: JSONObject;
+  source: string;
+};
 
 // On disk
-export type NbformatRawCell = {
-  cell_type: RawCellType,
-  metadata: JSONObject,
-  source: MultilineString
+export interface NbformatRawCell {
+  cell_type: RawCellType;
+  metadata: JSONObject;
+  source: MultilineString;
 };
 
 export type RawCellRecord = JSONObject;

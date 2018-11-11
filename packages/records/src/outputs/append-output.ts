@@ -1,8 +1,7 @@
-// @flow strict
 import { escapeCarriageReturnSafe } from "escape-carriage";
 import produce from "immer";
 
-import type { OutputType, StreamOutput } from "../outputs";
+import { OutputType, StreamOutput } from "../outputs";
 
 export function mutate() {}
 /**
@@ -42,7 +41,7 @@ mutate.appendOutput = function appendOutput(
       const outputsLength = outputs.length - 1;
       if (outputs[outputsLength].outputType === "stream") {
         Object.assign(outputs[outputsLength], {
-          text: appendText(outputs[outputsLength].text, streamOutput.text)
+          text: appendText((outputs[outputsLength] as StreamOutput).text, streamOutput.text)
         });
         return outputs;
       }
@@ -56,7 +55,7 @@ mutate.appendOutput = function appendOutput(
       const outputsLength = outputs.length - 2;
       if (outputs[outputsLength].outputType === "stream") {
         Object.assign(outputs[outputsLength], {
-          text: appendText(outputs[outputsLength].text, streamOutput.text)
+          text: appendText((outputs[outputsLength] as StreamOutput).text, streamOutput.text)
         });
         return outputs;
       }

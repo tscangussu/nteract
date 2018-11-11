@@ -1,5 +1,3 @@
-// @flow strict
-
 import produce from "immer";
 
 import * as common from "../common";
@@ -18,39 +16,40 @@ import * as common from "../common";
  */
 
 type ExecuteResultType = "execute_result";
-export type ExecutionCount = ?number;
+export type ExecutionCount = number | null | undefined;
 
-export const EXECUTE_RESULT = "execute_result";
+export const EXECUTE_RESULT: ExecuteResultType = "execute_result";
 
 // In-memory version
-export type ExecuteResultOutput = {
-  outputType: ExecuteResultType,
-  executionCount: ExecutionCount,
-  data: common.MimeBundle,
-  metadata: {}
+export interface ExecuteResultOutput {
+  outputType: ExecuteResultType;
+  executionCount: ExecutionCount;
+  data: common.MimeBundle;
+  metadata: object;
 };
 
 // On disk
-export type NbformatExecuteResult = {
-  output_type: ExecuteResultType,
-  execution_count: ExecutionCount,
-  data: common.OnDiskMimebundle,
-  metadata: {}
+export interface NbformatExecuteResult {
+  output_type: ExecuteResultType;
+  execution_count: ExecutionCount;
+  data: common.OnDiskMimebundle;
+  metadata: {};
 };
 
-type ExecuteResultMessage = {
+export interface ExecuteResultMessage {
   header: {
     msg_type: ExecuteResultType
-  },
+  };
   content: {
     execution_count: number,
     data: common.MimeBundle,
     metadata: {}
-  }
+  };
 };
 
 export function executeResult(
-  executeResultOutput?: $ReadOnly<{
+  executeResultOutput?: Readonly<{
+    outputType: "execute_result",
     executionCount?: ExecutionCount,
     data?: common.MimeBundle,
     metadata?: {}
@@ -73,6 +72,7 @@ executeResult.fromNbformat = function fromNbformat(
   s: NbformatExecuteResult
 ): ExecuteResultOutput {
   return executeResult({
+    outputType: "execute_result",
     executionCount: s.execution_count,
     data: common.createImmutableMimeBundle(s.data),
     metadata: s.metadata
@@ -83,6 +83,7 @@ executeResult.fromJupyterMessage = function fromJupyterMessage(
   msg: ExecuteResultMessage
 ): ExecuteResultOutput {
   return executeResult({
+    outputType: "execute_result",
     executionCount: msg.content.execution_count,
     data: msg.content.data,
     metadata: msg.content.metadata

@@ -1,5 +1,3 @@
-// @flow strict
-
 import * as common from "../common";
 
 /**
@@ -24,23 +22,23 @@ export const STDERR: StreamName = "stderr";
 export const STREAM = "stream";
 
 // In-memory version
-export type StreamOutput = {
-  outputType: StreamType,
-  name: StreamName,
-  text: string
+export interface StreamOutput {
+  outputType: StreamType;
+  name: StreamName;
+  text: string;
 };
 
 // On disk
-export type NbformatStreamOutput = {
-  output_type: StreamType,
-  name: StreamName,
-  text: common.MultilineString
+export interface NbformatStreamOutput {
+  output_type: StreamType;
+  name: StreamName;
+  text: common.MultilineString;
 };
 
-type StreamMessage = {
+export interface StreamMessage {
   header: {
     msg_type: StreamType
-  },
+  };
   content: {
     name: StreamName,
     text: string
@@ -48,7 +46,8 @@ type StreamMessage = {
 };
 
 export function streamOutput(
-  s: $ReadOnly<{
+  s: Readonly<{
+    outputType?: 'stream';
     name?: StreamName,
     text?: string
   }>

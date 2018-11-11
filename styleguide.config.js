@@ -28,7 +28,10 @@ module.exports = {
     },
     {
       name: "Binder Hosts and Kernels",
-      components: "packages/host-cache/src/components/*.ts"
+      propsParser: require("react-docgen-typescript").withCustomConfig(
+        "./tsconfig.base.json"
+      ).parse,
+      components: "packages/host-cache/src/components/*.tsx"
     },
     {
       name: "Directory Listing",

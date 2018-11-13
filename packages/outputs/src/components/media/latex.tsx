@@ -1,10 +1,9 @@
-/* @flow strict */
 import * as React from "react";
 import * as MathJax from "@nteract/mathjax";
 
-type Props = {
-  mediaType: string,
-  data: string
+interface Props {
+  mediaType: string;
+  data: string;
 };
 
 export class LaTeX extends React.PureComponent<Props> {

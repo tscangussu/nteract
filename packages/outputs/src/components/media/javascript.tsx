@@ -1,18 +1,17 @@
-/* @flow */
 import React from "react";
 
-type Props = {
+interface Props {
   /**
    * The media type associated with our component.
    */
-  mediaType: "text/javascript",
+  mediaType: "text/javascript";
   /**
    * The JavaScript code that we would like to execute.
    */
-  data: string
+  data: string;
 };
 
-export function runCodeHere(el: ?HTMLElement, code: string): any {
+export function runCodeHere(el: HTMLElement | null, code: string): any {
   if (!el) return;
   // Compatibility with Jupyter/notebook JS evaluation.  Set element so
   // the user has a handle on the context of the current output.
@@ -33,7 +32,7 @@ export function runCodeHere(el: ?HTMLElement, code: string): any {
 }
 
 export class JavaScript extends React.Component<Props> {
-  el: ?HTMLElement;
+  el: HTMLElement | null = null;
   static defaultProps = {
     mediaType: "application/javascript",
     data: ""
@@ -51,7 +50,7 @@ export class JavaScript extends React.Component<Props> {
     runCodeHere(this.el, this.props.data);
   }
 
-  render(): ?React$Element<any> {
+  render() {
     return (
       <div
         ref={el => {

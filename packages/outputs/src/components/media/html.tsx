@@ -1,16 +1,15 @@
-// @flow strict
 import * as React from "react";
 
-type Props = {
+interface Props {
   /**
    * The HTML string that will be rendered.
    */
-  data: string,
+  data: string;
   /**
    * The media type associated with the HTML
    * string. This defaults to text/html.
    */
-  mediaType: "text/html"
+  mediaType: "text/html";
 };
 
 // Note: createRange and Range must be polyfilled on older browsers with
@@ -28,7 +27,7 @@ export function createFragment(html: string): Node {
 }
 
 export class HTML extends React.Component<Props> {
-  el: ?HTMLElement;
+  el: HTMLElement | null = null;
   static defaultProps = {
     mediaType: "text/html",
     data: null

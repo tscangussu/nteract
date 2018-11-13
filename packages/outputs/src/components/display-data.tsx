@@ -1,14 +1,13 @@
-// @flow strict
 import * as React from "react";
-import type { MediaBundle } from "@nteract/records";
+import { MediaBundle } from "@nteract/records";
 
 import { RichMedia } from "./rich-media";
 
-type Props = {
+interface Props {
   /**
    * The literal type of output, used for routing with the `<Output />` element
    */
-  outputType: "display_data",
+  outputType: "display_data";
   /**
    * Object of media type → data
    *
@@ -24,15 +23,15 @@ type Props = {
    * for more detail.
    *
    */
-  data: MediaBundle,
+  data: MediaBundle;
   /**
    * custom settings, typically keyed by media type
    */
-  metadata: {},
+  metadata: object;
   /**
    * React elements that accept mimebundle data, will get passed data[mimetype]
    */
-  children: React.Node
+  children: React.ReactNode;
 };
 
 export const DisplayData = (props: Props) => {

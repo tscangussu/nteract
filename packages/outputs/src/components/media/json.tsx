@@ -1,4 +1,3 @@
-// @flow
 import * as React from "react";
 import JSONTree from "react-json-tree";
 
@@ -23,11 +22,11 @@ const defaultTheme = {
 
 const darkTheme = Object.assign({}, defaultTheme, { base0B: "#EDF3F7" });
 
-type Props = {
-  data: Object,
-  mediaType: string,
-  theme: string,
-  metadata: { expanded: boolean }
+interface Props {
+  data: object;
+  mediaType: string;
+  theme: string;
+  metadata: { expanded: boolean };
 };
 
 /** @component */

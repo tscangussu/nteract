@@ -1,13 +1,12 @@
-/* @flow */
 import React from "react";
 
-type Props = {
-  data: string,
-  mediaType: "image/png" | "image/jpeg" | "image/gif",
-  metadata: any
+interface Props {
+  data: string;
+  mediaType: "image/png" | "image/jpeg" | "image/gif";
+  metadata: any;
 };
 
-export function Image(props: Props): ?React$Element<any> {
+export function Image(props: Props) {
   let size = {};
 
   if (props.metadata) {

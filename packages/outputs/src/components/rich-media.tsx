@@ -1,19 +1,17 @@
-// @flow strict
-
 import * as React from "react";
-import type { MediaBundle } from "@nteract/records";
+import { MediaBundle } from "@nteract/records";
 
 /** Error handling types */
 type ReactErrorInfo = {
-  componentStack: string
+  componentStack: string;
 };
 
 type Caught = {
-  error: Error,
-  info: ReactErrorInfo
+  error: Error;
+  info: ReactErrorInfo;
 };
 
-type RichMediaProps = {
+interface RichMediaProps {
   /**
    * Object of media type → data
    *
@@ -29,28 +27,34 @@ type RichMediaProps = {
    * for more detail.
    *
    */
-  data: MediaBundle,
+  data: MediaBundle;
   /**
    * custom settings, typically keyed by media type
    */
-  metadata: {},
+  metadata: object;
   /**
    * React elements that accept mimebundle data, will get passed data[mimetype]
    */
-  children: React.Node,
+  children: React.ReactNode;
 
-  renderError: ({
-    error: Error,
-    info: ReactErrorInfo,
-    data: MediaBundle,
-    metadata: {},
-    children: React.Node
-  }) => React.Element<*>
-};
+  renderError({
+    error,
+    info,
+    data,
+    metadata,
+    children
+  }: {
+    error: Error;
+    info: ReactErrorInfo;
+    data: MediaBundle;
+    metadata: object;
+    children: React.ReactNode;
+  }): React.ReactElement<any>;
+}
 
 /* We make the RichMedia component an error boundary in case of any <Media /> component erroring */
 type State = {
-  caughtError?: Caught
+  caughtError?: Caught;
 };
 
 const ErrorFallback = (caught: Caught) => (
@@ -58,7 +62,7 @@ const ErrorFallback = (caught: Caught) => (
     style={{
       backgroundColor: "ghostwhite",
       color: "black",
-      fontWeight: "600",
+      fontWeight: 600,
       display: "block",
       padding: "10px",
       marginBottom: "20px"
@@ -79,7 +83,7 @@ export class RichMedia extends React.Component<RichMediaProps, State> {
     renderError: ErrorFallback
   };
 
-  state = {};
+  state: State = {};
 
   componentDidCatch(error: Error, info: ReactErrorInfo) {
     this.setState({ caughtError: { error, info } });
@@ -94,7 +98,7 @@ export class RichMedia extends React.Component<RichMediaProps, State> {
     }
 
     // We must pick only one child to render
-    let chosenOne = null;
+    let chosenOne: React.ReactChild | null = null;
 
     const data = this.props.data;
 
@@ -105,9 +109,9 @@ export class RichMedia extends React.Component<RichMediaProps, State> {
         return;
       }
       if (
-        child.props &&
-        child.props.mediaType &&
-        child.props.mediaType in data
+        child.props! &&
+        child.props!.mediaType &&
+        child.props!.mediaType in data
       ) {
         chosenOne = child;
         return;

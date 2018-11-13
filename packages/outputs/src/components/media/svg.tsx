@@ -1,13 +1,12 @@
-/* @flow */
 import React from "react";
 
-type Props = {
-  mediaType: string,
-  data: string
+interface Props {
+  mediaType: string;
+  data: string;
 };
 
 export class SVG extends React.Component<Props> {
-  el: ?HTMLElement;
+  el: HTMLElement | null = null;
   static defaultProps = {
     mediaType: "image/svg+xml",
     data: ""
@@ -32,7 +31,7 @@ export class SVG extends React.Component<Props> {
     this.el.insertAdjacentHTML("beforeend", this.props.data);
   }
 
-  render(): ?React$Element<any> {
+  render() {
     return (
       <div
         ref={el => {

@@ -1,17 +1,16 @@
-/* @flow */
 import * as React from "react";
 import MarkdownComponent from "@nteract/markdown";
 
-type Props = {
+interface Props {
   /**
    * Markdown text.
    */
-  data: string,
+  data: string;
   /**
    * Media type. Defaults to `text/markdown`.
    * For more on media types, see: https://www.w3.org/TR/CSS21/media.html%23media-types.
    */
-  mediaType: string
+  mediaType: string;
 };
 
 export class Markdown extends React.Component<Props> {
@@ -24,7 +23,7 @@ export class Markdown extends React.Component<Props> {
     return nextProps.data !== this.props.data;
   }
 
-  render(): ?React$Element<any> {
+  render() {
     return <MarkdownComponent source={this.props.data} />;
   }
 }

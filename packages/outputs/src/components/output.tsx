@@ -1,6 +1,6 @@
 import * as React from "react";
 // We might only need this as a devDependency as it is only here for flow
-import OutputType from "@nteract/records";
+import { OutputType } from "@nteract/records";
 
 interface Props {
   /**
@@ -35,9 +35,9 @@ export class Output extends React.Component<Props> {
         return;
       }
       if (
-        child.props &&
-        child.props.outputType &&
-        child.props.outputType === outputType
+        (child as React.ReactElement<any>).props &&
+        (child as React.ReactElement<any>).props.outputType &&
+        (child as React.ReactElement<any>).props.outputType === outputType
       ) {
         chosenOne = child;
         return;
@@ -50,6 +50,6 @@ export class Output extends React.Component<Props> {
     }
 
     // Render the output component that handles this output type
-    return React.cloneElement(chosenOne, this.props.output);
+    return React.cloneElement(chosenOne, this.props.output as any);
   }
 }

@@ -1,4 +1,4 @@
-import appendOutput, { mutate } from "../src/outputs/append-output";
+import appendOutput, { mutate } from "@nteract/records/src/outputs/append-output";
 
 describe("appendOutput", () => {
   test("puts new outputs at the end by default", () => {

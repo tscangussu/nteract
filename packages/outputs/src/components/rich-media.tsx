@@ -31,19 +31,13 @@ interface RichMediaProps {
   /**
    * custom settings, typically keyed by media type
    */
-  metadata: object;
+  metadata: {[key: string]: any};
   /**
    * React elements that accept mimebundle data, will get passed data[mimetype]
    */
   children: React.ReactNode;
 
-  renderError({
-    error,
-    info,
-    data,
-    metadata,
-    children
-  }: {
+  renderError(params: {
     error: Error;
     info: ReactErrorInfo;
     data: MediaBundle;
@@ -93,7 +87,9 @@ export class RichMedia extends React.Component<RichMediaProps, State> {
     if (this.state.caughtError) {
       return this.props.renderError({
         ...this.state.caughtError,
-        ...this.props
+        data: this.props.data,
+        metadata: this.props.metadata,
+        children: this.props.children,
       });
     }
 
@@ -109,9 +105,9 @@ export class RichMedia extends React.Component<RichMediaProps, State> {
         return;
       }
       if (
-        child.props! &&
-        child.props!.mediaType &&
-        child.props!.mediaType in data
+        (child as React.ReactElement<any>).props! &&
+        (child as React.ReactElement<any>).props!.mediaType &&
+        (child as React.ReactElement<any>).props!.mediaType in data
       ) {
         chosenOne = child;
         return;
@@ -123,7 +119,7 @@ export class RichMedia extends React.Component<RichMediaProps, State> {
       return null;
     }
 
-    const mediaType = chosenOne.props.mediaType;
+    const mediaType = (chosenOne as React.ReactElement<any>).props.mediaType;
 
     return React.cloneElement(chosenOne, {
       data: this.props.data[mediaType],

@@ -40,8 +40,9 @@ mutate.appendOutput = function appendOutput(
     if (last.name === streamOutput.name) {
       const outputsLength = outputs.length - 1;
       if (outputs[outputsLength].outputType === "stream") {
+        const currentStreamOutput = outputs[outputsLength] as StreamOutput;
         Object.assign(outputs[outputsLength], {
-          text: appendText((outputs[outputsLength] as StreamOutput).text, streamOutput.text)
+          text: appendText(currentStreamOutput.text, streamOutput.text)
         });
         return outputs;
       }
@@ -54,8 +55,9 @@ mutate.appendOutput = function appendOutput(
     ) {
       const outputsLength = outputs.length - 2;
       if (outputs[outputsLength].outputType === "stream") {
+        const currentStreamOutput = outputs[outputsLength] as StreamOutput;
         Object.assign(outputs[outputsLength], {
-          text: appendText((outputs[outputsLength] as StreamOutput).text, streamOutput.text)
+          text: appendText(currentStreamOutput.text, streamOutput.text)
         });
         return outputs;
       }
